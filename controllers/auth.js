@@ -114,7 +114,7 @@ module.exports.signIn = async (req, res) => {
       });
     } else {
       const token = jwt.sign(
-        { id: user._id, role: user.role },
+        { id: user._id },
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: "24h" }
       );
