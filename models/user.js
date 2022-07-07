@@ -33,6 +33,15 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  orders: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Order",
+    default: [],
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("User", UserSchema);
