@@ -1,7 +1,7 @@
 const { default: mongoose } = require("mongoose");
 
 const OrderSchema = new mongoose.Schema({
-  user: {
+  /*user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
@@ -10,13 +10,9 @@ const OrderSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Service",
     required: true,
-  },
+  },*/
   date: {
     type: Date,
-    required: true,
-  },
-  time: {
-    type: String,
     required: true,
   },
   isAccepted: {
@@ -57,4 +53,17 @@ const OrderSchema = new mongoose.Schema({
   actualDelivery: {
     type: Date,
   },
+  file: {
+    type: String,
+  },
+  paymentDetails: {
+    paymentId: {
+      type: String,
+    },
+    paymentStatus: {
+      type: String,
+    },
+  },
 });
+
+module.exports = mongoose.model("Order", OrderSchema);
