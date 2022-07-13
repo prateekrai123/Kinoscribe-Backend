@@ -8,6 +8,8 @@ const {
   successPay,
   updatePrice,
 } = require("../controllers/order");
+const { isAdmin } = require("../middlewares/isAdmin");
+const { isAuth } = require("../middlewares/isAuth");
 
 const router = require("express").Router();
 
@@ -22,14 +24,20 @@ router.post(
     check("wordCount", "Word count is required"),
     check("price", "Price is required"),
   ],
+  isAuth,
   placeOrder
 );
 
-router.get("/getOrdersByUserId/:userId", getOrdersByUserId);
+router.get("/getOrdersByUserId/:userId", isAuth, getOrdersByUserId);
 
-router.get("/allOrders", getAllOrders);
+router.get("/allOrders", isAuth, isAdmin, getAllOrders);
 
-router.post("/pay", check("orderId", "orderId is required"), payForOrder);
+router.post(
+  "/pay",
+  check("orderId", "orderId is required"),
+  isAuth,
+  payForOrder
+);
 
 router.get("/success", successPay);
 
@@ -39,6 +47,7 @@ router.post(
     check("orderId", "orderId is required"),
     check("price", "price is required"),
   ],
+  isAdmin,
   updatePrice
 );
 

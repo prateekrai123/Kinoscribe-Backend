@@ -1,7 +1,7 @@
 const { default: mongoose } = require("mongoose");
 
 const OrderSchema = new mongoose.Schema({
-  /*user: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
@@ -10,7 +10,7 @@ const OrderSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Service",
     required: true,
-  },*/
+  },
   date: {
     type: Date,
     required: true,
@@ -54,6 +54,9 @@ const OrderSchema = new mongoose.Schema({
     type: Date,
   },
   file: {
+    type: String,
+  },
+  delieveredFile: {
     type: String,
   },
   paymentDetails: {
