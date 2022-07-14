@@ -6,7 +6,7 @@ const {
   getAllOrders,
   payForOrder,
   successPay,
-  updatePrice,
+  updateOrder,
   pendingOrders,
 } = require("../controllers/order");
 const { isAdmin } = require("../middlewares/isAdmin");
@@ -50,7 +50,7 @@ router.post(
     check("price", "price is required"),
   ],
   isAdmin,
-  updatePrice
+  updateOrder
 );
 
 module.exports = router;
