@@ -1,6 +1,6 @@
-module.exports.getServiceById = (req, res) => {
-  const { id } = req.query;
-  Service.findById(id)
+module.exports.getServiceByName = (req, res) => {
+  const { name } = req.query;
+  Service.find({ name: name })
     .then((service) => {
       res.status(200).json(service);
     })

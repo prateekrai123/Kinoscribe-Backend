@@ -7,13 +7,12 @@ const {
   payForOrder,
   successPay,
   updatePrice,
+  pendingOrders,
 } = require("../controllers/order");
 const { isAdmin } = require("../middlewares/isAdmin");
 const { isAuth } = require("../middlewares/isAuth");
 
 const router = require("express").Router();
-
-//userId, serviceId, wordCount, price
 
 router.post(
   "/placeOrder",
@@ -32,6 +31,8 @@ router.get("/getOrdersByUserId/:userId", isAuth, getOrdersByUserId);
 
 router.get("/allOrders", isAuth, isAdmin, getAllOrders);
 
+router.get("allPendingOrders", isAuth, isAdmin, pendingOrders);
+
 router.post(
   "/pay",
   check("orderId", "orderId is required"),
@@ -42,7 +43,8 @@ router.post(
 router.get("/success", successPay);
 
 router.post(
-  "/updatePrice",
+  "/updateOrder",
+  upload.single("file"),
   [
     check("orderId", "orderId is required"),
     check("price", "price is required"),

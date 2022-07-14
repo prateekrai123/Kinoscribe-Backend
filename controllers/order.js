@@ -24,7 +24,7 @@ module.exports.placeOrder = (req, res) => {
     });
   }
 
-  const { /*userId, serviceId, */ wordCount, price } = req.body;
+  const { serviceId, wordCount, price } = req.body;
   const file = req.file;
 
   console.log(req.file);
@@ -38,8 +38,8 @@ module.exports.placeOrder = (req, res) => {
   }
 
   Order.create({
-    /*user: userId,
-    service: serviceId,*/
+    user: req.user,
+    service: serviceId,
     date: new Date(),
     wordCount: wordCount,
     price: price,
@@ -75,7 +75,7 @@ module.exports.getOrdersByUserId = (req, res) => {
 };
 
 module.exports.pendingOrders = (req, res) => {
-  Order.find({ isPending: true })
+  Order.find({ isCompleted: false })
     .then((orders) => {
       res.status(200).json(orders);
     })
@@ -281,7 +281,7 @@ module.exports.successPay = (req, res) => {
   res.redirect("https://kinoscribe.com");
 };
 
-module.exports.updatePrice = (req, res) => {
+module.exports.updateOrder = (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -294,7 +294,12 @@ module.exports.updatePrice = (req, res) => {
 
   const { orderId, price } = req.body;
 
-  Order.findOneAndUpdate({ _id: orderId }, { $set: { price: price } })
+  const file = req.file;
+
+  Order.findOneAndUpdate(
+    { _id: orderId },
+    { $set: { price: price, deliveredFile: file.filename } }
+  )
     .then((order) => {
       res.status(200).json(order);
     })
