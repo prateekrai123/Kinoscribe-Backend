@@ -118,11 +118,12 @@ module.exports.signIn = async (req, res) => {
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: "24h" }
       );
-      res.cookie("token", token, { expire: new Date() + 1000 });
+      res.cookie("token", token);
       return res.status(200).json({
         token: token,
         userId: user._id,
-        isError: true,
+        isError: false,
+        message: "Signed In successfully",
       });
     }
   });
