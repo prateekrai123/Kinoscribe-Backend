@@ -3,6 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/auth");
 const orderRoutes = require("./routes/order");
+const serviceRoutes = require("./routes/service");
 require("./db.js");
 require("dotenv").config();
 
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 
 app.use("/auth", authRoutes);
 app.use("/order", orderRoutes);
+app.use("/service", serviceRoutes);
 
 app.listen("4000", () => {
   console.log("Server is running on port 4000");
