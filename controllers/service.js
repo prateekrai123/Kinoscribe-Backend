@@ -1,4 +1,5 @@
 const { validationResult } = require("express-validator");
+const Service = require("../models/service");
 
 module.exports.getServiceByName = (req, res) => {
   const { name } = req.query;
@@ -28,6 +29,7 @@ module.exports.addService = (req, res) => {
   const service = new Service({
     name: name,
     price: price,
+    description: description,
   });
   service
     .save()
