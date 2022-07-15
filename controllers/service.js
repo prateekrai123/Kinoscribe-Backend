@@ -3,6 +3,8 @@ const Service = require("../models/service");
 
 module.exports.getServiceByName = (req, res) => {
   const { name } = req.query;
+  console.log(req.query);
+  console.log(name);
   Service.find({ name: name })
     .then((service) => {
       res.status(200).json(service);
