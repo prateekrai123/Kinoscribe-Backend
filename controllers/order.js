@@ -8,7 +8,7 @@ const Order = require("../models/Order");
 exports.upload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "uploads/delivered");
+      cb(null, "uploads/work");
     },
   }),
 });
@@ -17,7 +17,7 @@ module.exports.placeOrder = (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(422).json({
+    return res.status(208).json({
       message: "Error while placing order",
       isError: true,
       errors: errors.array(),
