@@ -5,7 +5,7 @@ module.exports.getServiceByName = (req, res) => {
   const { name } = req.query;
   console.log(req.query);
   console.log(name);
-  Service.find({ name: name })
+  Service.findOne({ name: name })
     .then((service) => {
       res.status(200).json(service);
     })
