@@ -25,10 +25,11 @@ module.exports.addService = (req, res) => {
     });
   }
 
-  const { name, price, description } = req.body;
+  const { name, price, description, title } = req.body;
   const service = new Service({
     name: name,
     price: price,
+    title: title,
     description: description,
   });
   service
