@@ -30,7 +30,7 @@ router.get("/getOrdersByUserId/:userId", isAuth, getOrdersByUserId);
 
 router.get("/allOrders", isAuth, isAdmin, getAllOrders);
 
-router.get("allPendingOrders", isAuth, isAdmin, pendingOrders);
+router.get("/allPendingOrders", isAuth, isAdmin, pendingOrders);
 
 router.post(
   "/pay",

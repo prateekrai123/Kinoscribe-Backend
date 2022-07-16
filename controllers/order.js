@@ -1,5 +1,6 @@
 const express = require("express");
 const { validationResult } = require("express-validator");
+const { default: mongoose } = require("mongoose");
 const multer = require("multer");
 const { default: Stripe } = require("stripe");
 const stripe = new Stripe(process.env.TEST_STRIPE_SEC_KEY);
@@ -39,8 +40,8 @@ module.exports.placeOrder = (req, res) => {
   }
 
   Order.create({
-    user: req.userId,
-    service: serviceId,
+    user: mongoose.Types.ObjectId(req.userId),
+    service: mongoose.Types.ObjectId(serviceId),
     date: new Date(),
     wordCount: wordCount,
     price: price,
