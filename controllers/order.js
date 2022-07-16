@@ -25,6 +25,7 @@ module.exports.placeOrder = (req, res) => {
   }
 
   const { serviceId, wordCount, price } = req.body;
+  const userId = req.userId;
   const file = req.file;
 
   console.log(req.file);
@@ -50,6 +51,7 @@ module.exports.placeOrder = (req, res) => {
     })
     .catch((err) => {
       res.status(208).json({
+        err: err,
         message: "Error while placing order",
         isError: true,
       });
