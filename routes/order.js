@@ -18,7 +18,6 @@ router.post(
   "/placeOrder",
   upload.single("file"),
   [
-    check("userId", "UserId is required").not().isEmpty(),
     check("serviceId", "ServiceId is required").not().isEmpty(),
     check("wordCount", "Word count is required"),
     check("price", "Price is required"),

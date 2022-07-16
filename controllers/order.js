@@ -39,7 +39,7 @@ module.exports.placeOrder = (req, res) => {
   }
 
   Order.create({
-    user: req.user,
+    user: req.userId,
     service: serviceId,
     date: new Date(),
     wordCount: wordCount,
