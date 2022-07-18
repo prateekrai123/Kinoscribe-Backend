@@ -57,10 +57,10 @@ module.exports.signUp = async (req, res) => {
       <p><a href=${uri}>Click here</a></p>`,
     });
   } catch (err) {
-    // return res.status(208).json({
-    //   message: "Internal Server Error",
-    //   isError: true,
-    // });
+    return res.status(208).json({
+      message: "Internal Server Error",
+      isError: true,
+    });
   }
 
   user.save((err, user) => {
@@ -72,6 +72,7 @@ module.exports.signUp = async (req, res) => {
     }
     return res.status(200).json({
       message: "User created successfully",
+      body: user,
       isError: false,
     });
   });
@@ -217,28 +218,28 @@ module.exports.verifyUser = async (req, res) => {
     const verify = await verifyToken.findOne({ token: token });
     if (verify) {
       let user = await User.findOne({ email: verify.email });
-      user.isVerified = true;
+      user.verified = true;
       await user.save();
       await verifyToken.findOneAndDelete({ token: token });
 
-      return res.render("verifyuser", {
-        isError: false,
-        message: "The user is verified successfully!",
-      });
-      // return res.status(200).json(successAction("The user is verified"));
+      // return res.render("verifyuser", {
+      //   isError: false,
+      //   message: "The user is verified successfully!",
+      // });
+      return res.status(200).json(successAction("The user is verified"));
     } else {
-      return res.render("verifyuser", {
-        isError: true,
-        message: "The token is expired!",
-      });
-      // return res.status(404).json(failAction("The token is expired"));
+      // return res.render("verifyuser", {
+      //   isError: true,
+      //   message: "The token is expired!",
+      // });
+      return res.status(404).json(failAction("The token is expired"));
     }
   } else {
-    return res.render("verifyuser", {
-      isError: true,
-      message: "Cannot get token",
-    });
-    // return res.status(404).json(failAction("Cannot get token"));
+    // return res.render("verifyuser", {
+    //   isError: true,
+    //   message: "Cannot get token",
+    // });
+    return res.status(404).json(failAction("Cannot get token"));
   }
 };
 
