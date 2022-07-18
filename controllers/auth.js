@@ -50,12 +50,16 @@ module.exports.signUp = async (req, res) => {
 
     const uri = `https://api.kinoscribe.com/verifyUser/${token}`;
 
+    console.log(1);
+
     mail.sendMail({
       to: req.body.email,
       subject: "Verification Email",
       html: `<h3>Click on the link to verify your email: <br></h3>
       <p><a href=${uri}>Click here</a></p>`,
     });
+
+    console.log(2);
   } catch (err) {
     return res.status(208).json({
       err: err,
