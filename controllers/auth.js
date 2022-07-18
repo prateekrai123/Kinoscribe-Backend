@@ -42,6 +42,7 @@ module.exports.signUp = async (req, res) => {
   });
 
   try {
+    console.log(crypto.randomBytes(64).toString("hex"));
     const token = crypto.randomBytes(64).toString("hex");
     const verifyToken = verifyToken({
       token: token,
@@ -52,6 +53,7 @@ module.exports.signUp = async (req, res) => {
       if (err) {
         console.log(err);
       }
+      console.log(token);
     });
 
     const uri = `https://api.kinoscribe.com/verifyUser/${token}`;
