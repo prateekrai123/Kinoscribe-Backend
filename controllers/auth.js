@@ -64,6 +64,7 @@ module.exports.signUp = async (req, res) => {
       <p><a href=${uri}>Click here</a></p>`,
     });
   } catch (err) {
+    console.log(err + " " + "error");
     return res.status(208).json({
       err: err,
       message: "Mail sending failed",
