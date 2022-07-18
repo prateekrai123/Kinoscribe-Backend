@@ -58,6 +58,7 @@ module.exports.signUp = async (req, res) => {
     });
   } catch (err) {
     return res.status(208).json({
+      err: err,
       message: "Internal Server Error",
       isError: true,
     });
