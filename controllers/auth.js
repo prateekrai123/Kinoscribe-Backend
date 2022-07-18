@@ -4,6 +4,7 @@ const mail = require("../utils/mail");
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../models/verifyToken");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 
 module.exports.signUp = async (req, res) => {
   const errors = validationResult(req);
