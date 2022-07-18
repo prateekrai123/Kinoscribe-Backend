@@ -42,18 +42,17 @@ module.exports.signUp = async (req, res) => {
   });
 
   try {
-    const token = crypto.randomBytes(32).toString("hex");
-    await verifyToken({
+    const token = crypto.randomBytes(64).toString("hex");
+    const verifyToken = verifyToken({
       token: token,
       email: req.body.email,
-    })
-      .save()
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
+    });
+
+    verifyToken.save((err, token) => {
+      if (err) {
         console.log(err);
-      });
+      }
+    });
 
     const uri = `https://api.kinoscribe.com/verifyUser/${token}`;
 
