@@ -42,7 +42,6 @@ module.exports.signUp = async (req, res) => {
   });
 
   try {
-    console.log(crypto.randomBytes(64).toString("hex"));
     const token = crypto.randomBytes(64).toString("hex");
     const verifyToken = verifyToken({
       token: token,
@@ -67,7 +66,7 @@ module.exports.signUp = async (req, res) => {
   } catch (err) {
     return res.status(208).json({
       err: err,
-      message: "Internal Server Error",
+      message: "Mail sending failed",
       isError: true,
     });
   }
