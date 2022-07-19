@@ -325,10 +325,10 @@ module.exports.updateOrder = (req, res) => {
     { $set: { price: price, deliveredFile: file.filename } }
   )
     .then((order) => {
-      res.status(200).json(order);
+      return res.status(200).json(order);
     })
     .catch((err) => {
-      res.status(208).json({
+      return res.status(208).json({
         message: "Error while updating price",
         isError: true,
       });
