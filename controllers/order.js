@@ -65,9 +65,9 @@ module.exports.getOrderById = (req, res) => {
   const id = req.body.id;
   console.log(id);
   Order.findOne({ _id: id })
-    .then((res) => {
+    .then((res1) => {
       return res.status(200).json({
-        order: res,
+        order: res1,
       });
     })
     .catch((err) => {
