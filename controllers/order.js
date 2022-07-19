@@ -62,7 +62,7 @@ module.exports.placeOrder = (req, res) => {
 };
 
 module.exports.getOrderById = (req, res) => {
-  const id = req.params.id;
+  const id = req.body.id;
   console.log(id);
   const order = Order.findOne({ _id: id });
   if (order) {
