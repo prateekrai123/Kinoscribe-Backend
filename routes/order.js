@@ -21,6 +21,8 @@ router.post(
     check("serviceId", "ServiceId is required").not().isEmpty(),
     check("wordCount", "Word count is required"),
     check("price", "Price is required"),
+    check("title", "Title is required"),
+    check("description", "Description is required"),
   ],
   isAuth,
   placeOrder

@@ -11,6 +11,14 @@ const OrderSchema = new mongoose.Schema({
     ref: "Service",
     required: true,
   },
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
   date: {
     type: Date,
     required: true,

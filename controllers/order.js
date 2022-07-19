@@ -25,7 +25,7 @@ module.exports.placeOrder = (req, res) => {
     });
   }
 
-  const { serviceId, wordCount, price } = req.body;
+  const { serviceId, wordCount, price, title, description } = req.body;
   const userId = req.userId;
   const file = req.file;
 
