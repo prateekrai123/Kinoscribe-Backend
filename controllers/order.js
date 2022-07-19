@@ -61,6 +61,21 @@ module.exports.placeOrder = (req, res) => {
     });
 };
 
+module.exports.getOrderById = (req, res) => {
+  const id = req.params;
+  const order = Order.findOne({ _id: id });
+  if (order) {
+    return res.status(200).json({
+      order: order,
+    });
+  } else {
+    return res.status(208).json({
+      message: "Error while getting order",
+      isError: true,
+    });
+  }
+};
+
 module.exports.getOrdersByUserId = (req, res) => {
   const { userId } = req.params;
   Order.find({
