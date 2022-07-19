@@ -16,20 +16,13 @@ module.exports.signUp = async (req, res) => {
   }
   const { name, email, password, phone } = req.body;
 
-  User.findOne({ email: email }, (err, user) => {
-    if (err) {
-      return res.status(208).json({
-        message: "Internal Server Error",
-        isError: true,
-      });
-    }
-    if (user) {
-      return res.status(208).json({
-        message: "User already exists",
-        isError: true,
-      });
-    }
-  });
+  if (await User.findOne({ email: req.body.email })) {
+    return res.status(208).json({
+      title: "Error",
+      message: "The email is already registered",
+      isError: true,
+    });
+  }
 
   const verificationCode = Math.floor(Math.random() * 1000000);
   const encryptedPassword = bcrypt.hashSync(password, 10);
