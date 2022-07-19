@@ -5,6 +5,7 @@ const multer = require("multer");
 const { default: Stripe } = require("stripe");
 const stripe = new Stripe(process.env.TEST_STRIPE_SEC_KEY);
 const Order = require("../models/Order");
+var path = require("path");
 
 exports.upload = multer({
   storage: multer.diskStorage({
