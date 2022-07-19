@@ -64,18 +64,20 @@ module.exports.placeOrder = (req, res) => {
 module.exports.getOrderById = (req, res) => {
   const id = req.body.id;
   console.log(id);
-  const order = Order.findOne({ _id: id });
-  console.log(order);
-  if (order) {
-    return res.status(200).json({
-      order: order,
+  Order.findOne({ _id: id })
+    .then((res) => {
+      return res.status(200).json({
+        order: res,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(208).json({
+        message: "Error while getting order",
+        isError: true,
+      });
     });
-  } else {
-    return res.status(208).json({
-      message: "Error while getting order",
-      isError: true,
-    });
-  }
+  // console.log(order);
 };
 
 module.exports.getOrdersByUserId = (req, res) => {
