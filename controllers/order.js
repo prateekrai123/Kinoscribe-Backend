@@ -29,9 +29,8 @@ module.exports.placeOrder = (req, res) => {
   const userId = req.userId;
   const file = req.file;
 
-  console.log(req.file);
-
   if (!file) {
+    console.log("No file");
     return res.status(208).json({
       message: "Error while placing order",
       isError: true,
@@ -51,7 +50,8 @@ module.exports.placeOrder = (req, res) => {
       res.status(200).json(order);
     })
     .catch((err) => {
-      res.status(208).json({
+      console.log(err);
+      return res.status(208).json({
         err: err,
         message: "Error while placing order",
         isError: true,
