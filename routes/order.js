@@ -53,6 +53,7 @@ router.post(
     check("orderId", "orderId is required"),
     check("price", "price is required"),
   ],
+  isAuth,
   isAdmin,
   updateOrder
 );
