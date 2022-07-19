@@ -9,6 +9,8 @@ require("dotenv").config();
 
 const app = express();
 
+app.use("/profile", express.static("uploads/work"));
+
 app.use(cors());
 app.use(bodyParser.json());
 
