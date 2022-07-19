@@ -42,6 +42,8 @@ module.exports.placeOrder = (req, res) => {
     user: mongoose.Types.ObjectId(req.userId),
     service: mongoose.Types.ObjectId(serviceId),
     date: new Date(),
+    title: title,
+    description: description,
     wordCount: wordCount,
     price: price,
     file: file.filename,
