@@ -44,7 +44,7 @@ module.exports.signUp = async (req, res) => {
 
     vt.save();
 
-    const uri = `164.92.126.21:4000/verify/${token}`;
+    const uri = `https://164.92.126.21:4000/verify/${token}`;
 
     mail.sendMail({
       to: req.body.email,
