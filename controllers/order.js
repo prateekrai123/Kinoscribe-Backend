@@ -65,6 +65,7 @@ module.exports.getOrderById = (req, res) => {
   const id = req.body.id;
   console.log(id);
   const order = Order.findOne({ _id: id });
+  console.log(order);
   if (order) {
     return res.status(200).json({
       order: order,

@@ -33,7 +33,7 @@ router.get("/getOrdersByUserId/:userId", isAuth, getOrdersByUserId);
 
 router.get("/allOrders", isAuth, isAdmin, getAllOrders);
 
-router.get("/orderById", isAuth, isAdmin, getOrderById);
+router.post("/orderById", isAuth, isAdmin, getOrderById);
 
 router.get("/allPendingOrders", isAuth, isAdmin, pendingOrders);
 
