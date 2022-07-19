@@ -42,14 +42,9 @@ module.exports.signUp = async (req, res) => {
       email: req.body.email,
     });
 
-    vt.save((err, token) => {
-      if (err) {
-        console.log(err);
-      }
-      console.log(token);
-    });
+    vt.save();
 
-    const uri = `https://api.kinoscribe.com/verifyUser/${token}`;
+    const uri = `164.92.126.21:4000/verify/${token}`;
 
     mail.sendMail({
       to: req.body.email,
@@ -58,7 +53,6 @@ module.exports.signUp = async (req, res) => {
       <p><a href=${uri}>Click here</a></p>`,
     });
   } catch (err) {
-    console.log(err + " " + "error");
     return res.status(208).json({
       err: err,
       message: "Mail sending failed",

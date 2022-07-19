@@ -24,6 +24,6 @@ router.post(
   signIn
 );
 
-router.get("verify/:token", verifyUser);
+router.get("/verify/:token", verifyUser);
 
 module.exports = router;
