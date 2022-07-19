@@ -8,6 +8,7 @@ const {
   successPay,
   updateOrder,
   pendingOrders,
+  getOrderById,
 } = require("../controllers/order");
 const { isAdmin } = require("../middlewares/isAdmin");
 const { isAuth } = require("../middlewares/isAuth");
