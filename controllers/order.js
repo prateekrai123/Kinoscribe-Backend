@@ -3,7 +3,7 @@ const { validationResult } = require("express-validator");
 const { default: mongoose } = require("mongoose");
 const multer = require("multer");
 const { default: Stripe } = require("stripe");
-const stripe = new Stripe(process.env.TEST_STRIPE_SEC_KEY);
+const stripe = new Stripe(process.env.STRIPE_SEC_KEY);
 const Order = require("../models/Order");
 var path = require("path");
 
