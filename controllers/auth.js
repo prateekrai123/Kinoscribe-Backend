@@ -210,7 +210,7 @@ exports.verify = async (req, res) => {
 };
 
 module.exports.verifyUser = async (req, res) => {
-  const token = await req.params.token;
+  const token = await req.query.token;
   if (token) {
     const verify = await verifyToken.findOne({ token: token });
     if (verify) {
