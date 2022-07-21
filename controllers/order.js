@@ -278,7 +278,10 @@ module.exports.payForOrder = (req, res) => {
                       },
                     }
                   );
-                  res.redirect(session.url);
+                  return res.status(200).json({
+                    isError: false,
+                    paymentUrl: session.url,
+                  });
                 })
                 .catch((err) => {
                   console.log(err);
