@@ -378,6 +378,7 @@ module.exports.successPay = (req, res) => {
   stripe.checkout.sessions
     .retrieve(paymentId)
     .then((session) => {
+      console.log(session);
       if (session.payment_status === "succeeded") {
         Order.findOneAndUpdate(
           { _id: oid },
@@ -387,7 +388,13 @@ module.exports.successPay = (req, res) => {
               paymentStatus: "succeeded",
             },
           }
-        );
+        )
+          .then((order) => {
+            console.log(order);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } else {
         Order.findOneAndUpdate(
           { _id: oid },
@@ -397,7 +404,13 @@ module.exports.successPay = (req, res) => {
               paymentStatus: "failed",
             },
           }
-        );
+        )
+          .then((order) => {
+            console.log(order);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     })
     .catch((err) => {
