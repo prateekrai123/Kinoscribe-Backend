@@ -278,7 +278,7 @@ module.exports.payForOrder = (req, res) => {
                       },
                     }
                   );
-                  window.location.href = session.url;
+                  res.redirect(session.url);
                 })
                 .catch((err) => {
                   console.log(err);
