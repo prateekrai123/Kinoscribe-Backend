@@ -242,6 +242,8 @@ module.exports.payForOrder = (req, res) => {
       });
     });
 
+  console.log(order);
+
   const product = stripe.products.create({
     name: order.title,
   });
