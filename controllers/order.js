@@ -242,7 +242,7 @@ module.exports.payForOrder = (req, res) => {
           console.log(product);
           stripe.prices
             .create({
-              unit_amount: order.price,
+              unit_amount: order.price * 100,
               currency: "usd",
               tax_behavior: "inclusive",
               product: product.id,
