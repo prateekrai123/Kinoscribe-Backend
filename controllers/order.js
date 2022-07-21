@@ -270,11 +270,9 @@ module.exports.payForOrder = (req, res) => {
                   Order.findOneAndUpdate(
                     { _id: orderId },
                     {
-                      $set: {
-                        paymentDetails: {
-                          paymentId: session.id,
-                          paymentStatus: "ongoing",
-                        },
+                      paymentDetails: {
+                        paymentId: session.id,
+                        paymentStatus: "ongoing",
                       },
                     }
                   )
