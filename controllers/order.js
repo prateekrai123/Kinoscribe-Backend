@@ -259,8 +259,7 @@ module.exports.payForOrder = (req, res) => {
                       quantity: 1,
                     },
                   ],
-                  success_url:
-                    "http://164.92.126.21:4000/order/success?id=orderId",
+                  success_url: `http://164.92.126.21:4000/order/success?id=${orderId}`,
                   cancel_url: "http://164.92.126.21:4000/order/cancel",
                   metadata: {
                     order_id: product.id,
