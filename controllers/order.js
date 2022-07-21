@@ -229,20 +229,42 @@ module.exports.payForOrder = (req, res) => {
 
   const { orderId } = req.body;
 
+  let order;
+
+  Order.findOne({ _id: orderId })
+    .then((order) => {
+      order = order;
+    })
+    .catch((err) => {
+      return res.status(208).json({
+        isError: true,
+        message: "Error while getting order",
+      });
+    });
+
+  const product = stripe.products.create({
+    name: order.title,
+  });
+
   stripe.checkout.sessions
     .create({
       payment_method_types: ["card"],
       mode: "payment",
       line_items: [
         {
-          price: "price_1LJqAdDSDC0qm5kR4CShA1TF",
-          quantity: 20,
+          price: stripe.prices.create({
+            unit_amount: order.price,
+            currency: "usd",
+            tax_behavior: "inclusive",
+            product: product.id,
+          }),
+          quantity: 1,
         },
       ],
       success_url: "http://localhost:3000/order/success",
       cancel_url: "http://localhost:3000/order/cancel",
       metadata: {
-        order_id: orderId,
+        order_id: product.id,
       },
     })
     .then((session) => {
@@ -267,6 +289,55 @@ module.exports.payForOrder = (req, res) => {
       });
     });
 };
+
+// module.exports.payOrder = (req, res) => {
+//   const errors = validationResult(req);
+
+//   if (!errors.isEmpty()) {
+//     return res.status(208).json({
+//       isError: true,
+//       message: "Please provide order Id",
+//     });
+//   }
+
+//   const { orderId } = req.body;
+//   let order;
+// Order.findOne({ _id: orderId })
+//   .then((order) => {
+//     order = order;
+//   })
+//   .catch((err) => {
+//     return res.status(208).json({
+//       isError: true,
+//       message: "Error while getting order",
+//     });
+//   });
+// const product = stripe.products.create({
+//   name: order.title,
+// });
+
+//   const price = stripe.prices.create({
+//     unit_amount: order.price,
+//     currency: "usd",
+//     product: product.id,
+//     tax_behavior: "inclusive",
+//   });
+
+//   const paymentLint = stripe.paymentLinks.create({
+//     line_items: [
+//       {
+//         price: price.id,
+//         quantity: 1,
+//       },
+//     ],
+//     after_completion: {
+//       type: "redirect",
+//       redirect: "http://localhost:3000",
+//     },
+//   });
+
+//   stripe.checkout.sessions.create()
+// };
 
 module.exports.successPay = (req, res) => {
   const oid = req.query.order_id;
