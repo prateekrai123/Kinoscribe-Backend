@@ -260,7 +260,7 @@ module.exports.payForOrder = (req, res) => {
                     },
                   ],
                   success_url:
-                    "http://164.92.126.21:4000/order/success/:orderId",
+                    "http://164.92.126.21:4000/order/success?id=orderId",
                   cancel_url: "http://164.92.126.21:4000/order/cancel",
                   metadata: {
                     order_id: product.id,
@@ -372,17 +372,17 @@ module.exports.payForOrder = (req, res) => {
 // };
 
 module.exports.successPay = (req, res) => {
-  const oid = req.query.order_id;
+  const oid = req.query.id;
 
   Order.findOne({ _id: oid })
     .then((order) => {
       stripe.checkout.sessions
-        .retrieve(paymentId)
+        .retrieve(order.paymentDetails.paymentId)
         .then((session) => {
           console.log(session);
           if (session.payment_status === "succeeded") {
             Order.findOneAndUpdate(
-              { _id: oid },
+              { _id: order._id },
               {
                 paymentDetails: {
                   paymentId: session.id,
@@ -398,7 +398,7 @@ module.exports.successPay = (req, res) => {
               });
           } else {
             Order.findOneAndUpdate(
-              { _id: oid },
+              { _id: order._id },
               {
                 paymentDetails: {
                   paymentId: session.id,
