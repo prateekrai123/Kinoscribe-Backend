@@ -277,7 +277,17 @@ module.exports.payForOrder = (req, res) => {
                         },
                       },
                     }
-                  );
+                  )
+                    .then((order) => {
+                      console.log(order);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      return res.status(208).json({
+                        isError: true,
+                        message: "Not able to update order",
+                      });
+                    });
                   return res.status(200).json({
                     isError: false,
                     paymentUrl: session.url,
