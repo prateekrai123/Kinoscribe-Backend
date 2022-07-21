@@ -384,7 +384,7 @@ module.exports.successPay = (req, res) => {
           {
             paymentDetails: {
               paymentId: session.id,
-              paymentStatus: succeeded,
+              paymentStatus: "succeeded",
             },
           }
         );
@@ -394,7 +394,7 @@ module.exports.successPay = (req, res) => {
           {
             paymentDetails: {
               paymentId: session.id,
-              paymentStatus: failed,
+              paymentStatus: "failed",
             },
           }
         );
