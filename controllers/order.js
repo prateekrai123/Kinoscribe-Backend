@@ -373,6 +373,7 @@ module.exports.payForOrder = (req, res) => {
 
 module.exports.successPay = (req, res) => {
   const oid = req.query.id;
+  console.log(oid);
 
   Order.findOne({ _id: oid })
     .then((order) => {
@@ -421,7 +422,9 @@ module.exports.successPay = (req, res) => {
       res.redirect("https://kinoscribe.com");
     })
     .catch((err) => {
+      console.log(err);
       return res.status(208).json({
+        err: err
         isError: true,
         message: "Error while getting order",
       });
