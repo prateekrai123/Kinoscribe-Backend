@@ -259,7 +259,8 @@ module.exports.payForOrder = (req, res) => {
                       quantity: 1,
                     },
                   ],
-                  success_url: "http://164.92.126.21:4000/order/success",
+                  success_url:
+                    "http://164.92.126.21:4000/order/success/:orderId",
                   cancel_url: "http://164.92.126.21:4000/order/cancel",
                   metadata: {
                     order_id: product.id,
@@ -373,51 +374,58 @@ module.exports.payForOrder = (req, res) => {
 module.exports.successPay = (req, res) => {
   const oid = req.query.order_id;
 
-  const paymentId = Order.findOne({ _id: oid });
+  Order.findOne({ _id: oid })
+    .then((order) => {
+      stripe.checkout.sessions
+        .retrieve(paymentId)
+        .then((session) => {
+          console.log(session);
+          if (session.payment_status === "succeeded") {
+            Order.findOneAndUpdate(
+              { _id: oid },
+              {
+                paymentDetails: {
+                  paymentId: session.id,
+                  paymentStatus: "succeeded",
+                },
+              }
+            )
+              .then((order) => {
+                console.log(order);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            Order.findOneAndUpdate(
+              { _id: oid },
+              {
+                paymentDetails: {
+                  paymentId: session.id,
+                  paymentStatus: "failed",
+                },
+              }
+            )
+              .then((order) => {
+                console.log(order);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-  stripe.checkout.sessions
-    .retrieve(paymentId)
-    .then((session) => {
-      console.log(session);
-      if (session.payment_status === "succeeded") {
-        Order.findOneAndUpdate(
-          { _id: oid },
-          {
-            paymentDetails: {
-              paymentId: session.id,
-              paymentStatus: "succeeded",
-            },
-          }
-        )
-          .then((order) => {
-            console.log(order);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
-        Order.findOneAndUpdate(
-          { _id: oid },
-          {
-            paymentDetails: {
-              paymentId: session.id,
-              paymentStatus: "failed",
-            },
-          }
-        )
-          .then((order) => {
-            console.log(order);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+      res.redirect("https://kinoscribe.com");
     })
     .catch((err) => {
-      console.log(err);
+      return res.status(208).json({
+        isError: true,
+        message: "Error while getting order",
+      });
     });
-
-  res.redirect("https://kinoscribe.com");
 };
 
 module.exports.updateOrder = (req, res) => {
