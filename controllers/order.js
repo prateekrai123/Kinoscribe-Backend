@@ -326,7 +326,7 @@ module.exports.updateOrder = (req, res) => {
 
   Order.findOneAndUpdate(
     { _id: orderId },
-    { $set: { price: price, deliveredFile: file.filename } }
+    { $set: { price: price, delieveredFile: file.filename } }
   )
     .then((order) => {
       return res.status(200).json(order);
