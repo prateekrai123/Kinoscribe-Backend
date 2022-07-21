@@ -12,7 +12,7 @@ module.exports.getPendingOrders = (req, res) => {
     });
   }
 
-  Order.find({ isCompleted: false, userId: req.user.id })
+  Order.find({ isCompleted: false, userId: req.userId })
     .then((orders) => {
       res.status(200).json(orders);
     })
@@ -34,7 +34,7 @@ module.exports.getCompletedOrders = (req, res) => {
     });
   }
 
-  Order.find({ isCompleted: true, userId: req.user.id })
+  Order.find({ isCompleted: true, userId: req.userId })
     .then((orders) => {
       res.status(200).json(orders);
     })
