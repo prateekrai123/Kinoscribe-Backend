@@ -272,7 +272,7 @@ module.exports.payForOrder = (req, res) => {
                       $set: {
                         paymentDetails: {
                           paymentId: session.id,
-                          paymentStatus: ongoing,
+                          paymentStatus: "ongoing",
                         },
                       },
                     }
