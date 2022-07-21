@@ -49,8 +49,7 @@ module.exports.signUp = async (req, res) => {
     mail.sendMail({
       to: req.body.email,
       subject: "Verification Email",
-      html: `<h3>Click on the link to verify your email: <br></h3>
-      <p><a href=${uri}>Click here</a></p>`,
+      html: `Your verification code is <br>${verificationCode}`,
     });
   } catch (err) {
     return res.status(208).json({
