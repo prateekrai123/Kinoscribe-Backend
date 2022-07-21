@@ -234,52 +234,70 @@ module.exports.payForOrder = (req, res) => {
   Order.findOne({ _id: orderId })
     .then((order) => {
       console.log(order);
-      const product = stripe.products.create({
-        name: order.title,
-      });
-
-      console.log(product);
-
-      stripe.checkout.sessions
+      const product = stripe.products
         .create({
-          payment_method_types: ["card"],
-          mode: "payment",
-          line_items: [
-            {
-              price: stripe.prices.create({
-                unit_amount: order.price,
-                currency: "usd",
-                tax_behavior: "inclusive",
-                product: product.id,
-              }),
-              quantity: 1,
-            },
-          ],
-          success_url: "http://localhost:3000/order/success",
-          cancel_url: "http://localhost:3000/order/cancel",
-          metadata: {
-            order_id: product.id,
-          },
+          name: order.title,
         })
-        .then((session) => {
-          Order.findOneAndUpdate(
-            { _id: orderId },
-            {
-              $set: {
-                paymentDetails: {
-                  paymentId: session.id,
-                  paymentStatus: ongoing,
-                },
-              },
-            }
-          );
-          res.redirect(session.url);
+        .then((product) => {
+          console.log(product);
+          stripe.prices
+            .create({
+              unit_amount: order.price,
+              currency: "usd",
+              tax_behavior: "inclusive",
+              product: product.id,
+            })
+            .then((price) => {
+              console.log(price);
+              stripe.checkout.sessions
+                .create({
+                  payment_method_types: ["card"],
+                  mode: "payment",
+                  line_items: [
+                    {
+                      price: price.id,
+                      quantity: 1,
+                    },
+                  ],
+                  success_url: "http://localhost:3000/order/success",
+                  cancel_url: "http://localhost:3000/order/cancel",
+                  metadata: {
+                    order_id: product.id,
+                  },
+                })
+                .then((session) => {
+                  Order.findOneAndUpdate(
+                    { _id: orderId },
+                    {
+                      $set: {
+                        paymentDetails: {
+                          paymentId: session.id,
+                          paymentStatus: ongoing,
+                        },
+                      },
+                    }
+                  );
+                  res.redirect(session.url);
+                })
+                .catch((err) => {
+                  console.log(err);
+                  res.status(208).json({
+                    message: "Error while creating session",
+                    isError: true,
+                  });
+                });
+            })
+            .catch((err) => {
+              return res.status(208).json({
+                isError: true,
+                message: "Error while creating price",
+              });
+            });
         })
         .catch((err) => {
-          console.log(err);
-          res.status(208).json({
-            message: "Error while paying for order",
+          return res.status(208).json({
             isError: true,
+            message: "Error while creating product",
           });
         });
     })
