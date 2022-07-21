@@ -424,7 +424,7 @@ module.exports.successPay = (req, res) => {
     .catch((err) => {
       console.log(err);
       return res.status(208).json({
-        err: err
+        err: err,
         isError: true,
         message: "Error while getting order",
       });
