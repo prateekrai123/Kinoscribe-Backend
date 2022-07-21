@@ -238,6 +238,8 @@ module.exports.payForOrder = (req, res) => {
         name: order.title,
       });
 
+      console.log(product);
+
       stripe.checkout.sessions
         .create({
           payment_method_types: ["card"],
