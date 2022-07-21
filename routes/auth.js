@@ -24,6 +24,13 @@ router.post(
   signIn
 );
 
-router.get("/verify/:token", verifyUser);
+router.post(
+  "/verify",
+  [
+    check("verificationCode", "code is required"),
+    check("email", "email is required"),
+  ],
+  verifyUser
+);
 
 module.exports = router;

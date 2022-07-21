@@ -209,34 +209,51 @@ exports.verify = async (req, res) => {
 };
 
 module.exports.verifyUser = async (req, res) => {
-  const token = await req.params.token;
-  if (token) {
-    const verify = await verifyToken.findOne({ token: token });
-    if (verify) {
-      let user = await User.findOne({ email: verify.email });
-      user.verified = true;
-      await user.save();
-      await verifyToken.findOneAndDelete({ token: token });
+  const errors = validationResult(req);
 
-      // return res.render("verifyuser", {
-      //   isError: false,
-      //   message: "The user is verified successfully!",
-      // });
-      return res.status(200).json(successAction("The user is verified"));
-    } else {
-      // return res.render("verifyuser", {
-      //   isError: true,
-      //   message: "The token is expired!",
-      // });
-      return res.status(404).json(failAction("The token is expired"));
-    }
-  } else {
-    // return res.render("verifyuser", {
-    //   isError: true,
-    //   message: "Cannot get token",
-    // });
-    return res.status(404).json(failAction("Cannot get token"));
+  if (!errors.isEmpty()) {
+    return res.status(208).json({
+      errors: errors.array(),
+      isError: true,
+      message: "Error while verification",
+    });
   }
+
+  const { email, verificationCode } = req.body;
+
+  User.findOne({ email: email }, (err, user) => {
+    if (err) {
+      return res.status(208).json({
+        message: "Internal Server Error",
+        isError: true,
+      });
+    }
+    if (!user) {
+      return res.status(208).json({
+        message: "User does not exist",
+        isError: true,
+      });
+    }
+    if (user.verificationCode !== verificationCode) {
+      return res.status(208).json({
+        message: "Invalid verification code",
+        isError: true,
+      });
+    }
+    user.verified = true;
+    user.save((err, user) => {
+      if (err) {
+        return res.status(208).json({
+          message: "Internal Server Error",
+          isError: true,
+        });
+      }
+      return res.status(200).json({
+        message: "User verified successfully",
+        isError: false,
+      });
+    });
+  });
 };
 
 module.exports.resetPassword = (req, res) => {
