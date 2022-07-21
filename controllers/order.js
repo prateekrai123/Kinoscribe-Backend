@@ -380,7 +380,7 @@ module.exports.successPay = (req, res) => {
         .retrieve(order.paymentDetails.paymentId)
         .then((session) => {
           console.log(session);
-          if (session.payment_status === "succeeded") {
+          if (session.payment_status === "paid") {
             Order.findOneAndUpdate(
               { _id: order._id },
               {
