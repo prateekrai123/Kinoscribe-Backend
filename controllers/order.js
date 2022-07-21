@@ -266,6 +266,7 @@ module.exports.payForOrder = (req, res) => {
                   },
                 })
                 .then((session) => {
+                  console.log(session);
                   Order.findOneAndUpdate(
                     { _id: orderId },
                     {
@@ -277,7 +278,7 @@ module.exports.payForOrder = (req, res) => {
                       },
                     }
                   );
-                  res.redirect(session.url);
+                  window.location.href = session.url;
                 })
                 .catch((err) => {
                   console.log(err);

@@ -12,7 +12,13 @@ const app = express();
 
 app.use("/profile", express.static("uploads/work"));
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credentials: true, //access-control-allow-credentials:true
+    optionSuccessStatus: 200,
+  })
+);
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
