@@ -229,6 +229,8 @@ module.exports.payForOrder = (req, res) => {
 
   const { orderId } = req.body;
 
+  console.log(orderId);
+
   Order.findOne({ _id: orderId })
     .then((order) => {
       console.log(order);
