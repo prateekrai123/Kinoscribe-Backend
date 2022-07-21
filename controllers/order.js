@@ -382,11 +382,9 @@ module.exports.successPay = (req, res) => {
         Order.findOneAndUpdate(
           { _id: oid },
           {
-            $set: {
-              paymentDetails: {
-                paymentId: session.id,
-                paymentStatus: succeeded,
-              },
+            paymentDetails: {
+              paymentId: session.id,
+              paymentStatus: succeeded,
             },
           }
         );
@@ -394,11 +392,9 @@ module.exports.successPay = (req, res) => {
         Order.findOneAndUpdate(
           { _id: oid },
           {
-            $set: {
-              paymentDetails: {
-                paymentId: session.id,
-                paymentStatus: failed,
-              },
+            paymentDetails: {
+              paymentId: session.id,
+              paymentStatus: failed,
             },
           }
         );
