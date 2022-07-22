@@ -321,6 +321,11 @@ module.exports.payForOrder = (req, res) => {
     });
 };
 
+module.exports.cancelPay = (req, res) => {
+  res.send("The payment was cancelled");
+  res.redirect("konoscribe.com");
+};
+
 // module.exports.payOrder = (req, res) => {
 //   const errors = validationResult(req);
 

@@ -46,6 +46,8 @@ router.post(
 
 router.get("/success", successPay);
 
+router.get("/cancel", cancelPay);
+
 router.post(
   "/updateOrder",
   upload.single("file"),
