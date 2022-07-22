@@ -119,6 +119,7 @@ module.exports.signIn = async (req, res) => {
       return res.status(200).json({
         token: token,
         userId: user._id,
+        isAdmin: user.isAdmin,
         isError: false,
         message: "Signed In successfully",
       });
