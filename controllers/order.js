@@ -3,7 +3,7 @@ const { validationResult } = require("express-validator");
 const { default: mongoose } = require("mongoose");
 const multer = require("multer");
 const { default: Stripe } = require("stripe");
-const stripe = new Stripe(process.env.TEST_STRIPE_SEC_KEY);
+const stripe = new Stripe(process.env.STRIPE_SEC_KEY);
 const Order = require("../models/Order");
 var path = require("path");
 
@@ -259,8 +259,8 @@ module.exports.payForOrder = (req, res) => {
                       quantity: 1,
                     },
                   ],
-                  success_url: `http://164.92.126.21:4000/order/success?id=${orderId}`,
-                  cancel_url: "http://164.92.126.21:4000/order/cancel",
+                  success_url: `https://api.kinoscribe.com/order/success?id=${orderId}`,
+                  cancel_url: "https://api.kinoscribe.com/order/cancel",
                   metadata: {
                     order_id: product.id,
                   },
